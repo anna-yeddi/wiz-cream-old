@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+    <link rel="shortcut icon" href="assets/icons/icecream-2-icon.png" type="image/x-icon">
+    <title>Product App</title>
+</head>
+<body>
+    
+    <div id="app">
+
+    <div class="navbar">
+        <p class="brand">Wiz Cream</p>
+        <p class="cart"><i class="fas fa-shopping-cart"></i>Cart ({{cart}})</p>
+    </div>
+
+        <div class="product">
+
+            <div class="product-image">
+                <img v-bind:src="image" alt="product image">
+            </div>
+            
+            <div class="container">
+
+                <div class="product-info">
+                    <h1>{{ product }}</h1>
+                    <h4>{{ description }}</h4>
+                    <p v-if="inventory > 0 && inventory <= 10">
+                        Almost Sold Out!</p>
+                    <p v-else-if="inStock">In Stock</p>
+                    <p v-else>Out of Stock</p>
+                </div>
+    
+                <ul>
+                    <li v-for="detail in details">{{ detail }}</li>
+                </ul>
+
+                <div v-for="product in products" 
+                    :key="product.productId"
+                    class="color-box"
+                    :style="{ backgroundImage: 'url(' + product.productIcon + ')' }"
+                    @mouseover="updateProduct(product.productImage)" 
+                    :title="product.productName" :alt="product.productName">
+                </div>
+
+                <div class="buttons">
+                    <button v-on:click="addToCart" id="btnAdd"
+                        :disabled="!inStock">
+                        <i class="fas fa-cart-plus"></i>Add to Cart</button>
+                    <button id="btnDelete" @click="cart = 0">Remove from Cart</button>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+    <!-- development version, includes helpful console warnings -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="main.js"></script>
+</body>
+</html>
